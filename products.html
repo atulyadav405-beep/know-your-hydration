@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Products — Hydration Reference</title>
+<meta name="description" content="30+ electrolyte products catalogued side-by-side. Filter by category, evidence level, use case, and more."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/style.css"/>
+<style>
+/* Filter sidebar */
+.products-layout { display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media (min-width: 1024px) { .products-layout { grid-template-columns: 240px 1fr; gap: 28px; align-items: start; } }
+
+.filter-sidebar {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-xl); padding: 20px;
+  box-shadow: var(--sh-sm);
+}
+@media (min-width: 1024px) { .filter-sidebar { position: sticky; top: 76px; } }
+
+.filter-section { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+.filter-section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.filter-section-title {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-4);
+  margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
+}
+.filter-clear-btn { font-size: 11px; font-weight: 500; color: var(--teal); background: none; border: none; cursor: pointer; padding: 0; }
+.filter-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.f-pill {
+  font-size: 12px; font-weight: 500; padding: 5px 12px;
+  border-radius: 20px; background: var(--surface-2);
+  border: 1.5px solid var(--border); color: var(--ink-3);
+  cursor: pointer; transition: all 0.15s; white-space: nowrap;
+}
+.f-pill:hover { border-color: var(--teal); color: var(--teal); }
+.f-pill.on { background: var(--teal); color: #fff; border-color: var(--teal); }
+
+/* Mobile filter toggle */
+.filter-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: 12px 16px;
+  font-size: 14px; font-weight: 600; color: var(--ink);
+  width: 100%; cursor: pointer; margin-bottom: 16px;
+}
+@media (min-width: 1024px) { .filter-toggle { display: none; } }
+.filter-sidebar-wrap { display: none; }
+.filter-sidebar-wrap.open { display: block; margin-bottom: 16px; }
+@media (min-width: 1024px) { .filter-sidebar-wrap { display: block !important; } }
+
+/* Product cards grid */
+.products-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 640px)  { .products-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1280px) { .products-grid { grid-template-columns: 1fr 1fr 1fr; gap: 16px; } }
+
+.prod-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-xl); padding: 20px;
+  box-shadow: var(--sh-sm); display: flex; flex-direction: column; gap: 14px;
+  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+}
+.prod-card:hover { box-shadow: var(--sh-md); transform: translateY(-2px); border-color: var(--teal-mid); }
+.prod-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.prod-cat  { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 3px; }
+.prod-name { font-family: 'Lora', serif; font-size: 1.05rem; font-weight: 700; color: var(--ink); line-height: 1.25; }
+.prod-origin { font-size: 11px; color: var(--ink-4); margin-top: 2px; }
+.prod-best { font-size: 12px; color: var(--ink-3); line-height: 1.55; border-top: 1px solid var(--border); padding-top: 12px; }
+.prod-caveat { font-size: 11.5px; color: var(--ev-med); background: var(--ev-med-bg); border-radius: var(--r-md); padding: 8px 12px; line-height: 1.5; }
+.prod-caveat::before { content: '⚠ '; font-weight: 700; }
+.prod-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+.prod-tag { font-size: 11px; padding: 3px 10px; border-radius: 4px; background: var(--surface-2); color: var(--ink-3); border: 1px solid var(--border); }
+
+/* Sort bar */
+.sort-bar {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.sort-select {
+  padding: 8px 12px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-md); font-size: 13px; color: var(--ink); cursor: pointer; outline: none;
+}
+.sort-select:focus { border-color: var(--teal); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="nav-logo"><div class="nav-logo-dot"></div>Hydration Reference</a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="products.html" class="active">Products</a>
+      <a href="library.html">Research Library</a>
+      <a href="https://atulyadav405-beep.github.io/hydration-reference/" target="_blank">Full Database ↗</a>
+    </nav>
+    <div class="nav-right">
+      <button class="nav-burger" id="navBurger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="index.html">Home</a>
+  <a href="products.html" class="active">Products</a>
+  <a href="library.html">Research Library</a>
+  <a href="https://atulyadav405-beep.github.io/hydration-reference/" target="_blank">Full Database ↗</a>
+</div>
+
+<!-- Page hero -->
+<div class="page-hero">
+  <div class="wrap">
+    <span class="label">30+ Products</span>
+    <h1 class="heading" style="margin-bottom:8px;">Electrolyte Product Catalog</h1>
+    <p class="subheading">Clinical, sports, Indian DTC, and traditional options — catalogued side by side. Filter by what matters to you.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="wrap">
+
+    <!-- Search -->
+    <div class="search-wrap" style="margin-bottom:16px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input class="search-input" type="text" id="searchInput" placeholder="Search products, categories, use cases..." oninput="renderProducts()"/>
+    </div>
+
+    <!-- Mobile filter toggle -->
+    <button class="filter-toggle" onclick="toggleFilters()">
+      <span>⚙ Filters</span>
+      <span id="filterCount" style="font-size:12px;color:var(--teal);font-weight:500;"></span>
+    </button>
+
+    <div class="products-layout">
+
+      <!-- Sidebar filters -->
+      <div class="filter-sidebar-wrap" id="filterSidebar">
+        <div class="filter-sidebar">
+
+          <div class="filter-section">
+            <div class="filter-section-title">Category <button class="filter-clear-btn" onclick="clearGroup('cat')">Clear</button></div>
+            <div class="filter-pills" id="fCat"></div>
+          </div>
+
+          <div class="filter-section">
+            <div class="filter-section-title">Evidence <button class="filter-clear-btn" onclick="clearGroup('ev')">Clear</button></div>
+            <div class="filter-pills" id="fEv"></div>
+          </div>
+
+          <div class="filter-section">
+            <div class="filter-section-title">Use case <button class="filter-clear-btn" onclick="clearGroup('use')">Clear</button></div>
+            <div class="filter-pills" id="fUse"></div>
+          </div>
+
+          <div class="filter-section">
+            <div class="filter-section-title">Tonicity <button class="filter-clear-btn" onclick="clearGroup('tonic')">Clear</button></div>
+            <div class="filter-pills" id="fTonic"></div>
+          </div>
+
+          <div class="filter-section">
+            <div class="filter-section-title">Sugar <button class="filter-clear-btn" onclick="clearGroup('sugar')">Clear</button></div>
+            <div class="filter-pills" id="fSugar"></div>
+          </div>
+
+          <div style="margin-top:4px;">
+            <button onclick="clearAll()" style="font-size:12px;font-weight:600;color:var(--alert);background:none;border:none;cursor:pointer;padding:4px 0;">Reset all filters</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products -->
+      <div>
+        <div class="sort-bar">
+          <div class="results-count" style="margin:0;flex:1" id="resultsCount"></div>
+          <select class="sort-select" id="sortSelect" onchange="renderProducts()">
+            <option value="default">Default order</option>
+            <option value="na-desc">Sodium ↓</option>
+            <option value="na-asc">Sodium ↑</option>
+            <option value="mg-desc">Magnesium ↓</option>
+            <option value="sugar-asc">Sugar (low → high)</option>
+            <option value="ev">Evidence (highest first)</option>
+          </select>
+        </div>
+        <div class="products-grid" id="productsGrid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><div class="footer-brand-dot"></div>Hydration Reference</div>
+        <div class="footer-desc">Brand-neutral clinical electrolyte database. Peer-reviewed sources only.</div>
+      </div>
+      <div>
+        <div class="footer-col-head">On this site</div>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="library.html">Research Library</a>
+      </div>
+      <div>
+        <div class="footer-col-head">Full Database</div>
+        <a href="https://atulyadav405-beep.github.io/hydration-reference/" target="_blank">Clinical Dashboard ↗</a>
+        <a href="https://atulyadav405-beep.github.io/hydration-reference/#sources" target="_blank">60+ Sources ↗</a>
+      </div>
+      <div>
+        <div class="footer-col-head">About</div>
+        <a href="https://atulyadav405-beep.github.io/hydration-reference/" target="_blank">Methodology ↗</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Clinical Reference · Brand-Neutral · May 2026</p>
+      <p>For informational purposes only.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="chat-bar">
+  <div class="wrap chat-inner">
+    <button class="chat-icon-btn">📄</button>
+    <input class="chat-input" type="text" id="chatInput" placeholder="Ask: 'Which product is best for heat?' or 'Compare LMNT vs Osmo'" onkeypress="if(event.key==='Enter')doChat()"/>
+    <button class="chat-send" onclick="doChat()">→</button>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script>
+const CAT_COLOR = {clinical:'#059669',global:'#1D4ED8',indian:'#7C3AED',mass:'#B45309',traditional:'#065F46'};
+const EV_ORDER  = {high:0,med:1,mixed:2,low:3};
+
+const FILTERS = {cat:new Set(),ev:new Set(),use:new Set(),tonic:new Set(),sugar:new Set()};
+
+// Filter definitions
+const CAT_OPTS   = [{v:'clinical',l:'Clinical'},{v:'global',l:'Global Sports'},{v:'indian',l:'Indian DTC'},{v:'mass',l:'Mass Market'},{v:'traditional',l:'Traditional'}];
+const EV_OPTS    = [{v:'high',l:'High evidence'},{v:'med',l:'Medium'},{v:'mixed',l:'Mixed'},{v:'low',l:'Low'}];
+const USE_OPTS   = [{v:'illness',l:'Illness/ORS'},{v:'exercise',l:'Exercise'},{v:'heat',l:'Heat work'},{v:'daily',l:'Daily'},{v:'recovery',l:'Recovery'},{v:'keto',l:'Keto'}];
+const TONIC_OPTS = [{v:'Hypotonic',l:'Hypotonic'},{v:'Isotonic',l:'Isotonic'},{v:'Hypertonic',l:'Hypertonic'},{v:'Variable',l:'Variable'}];
+const SUGAR_OPTS = [{v:'zero',l:'Zero sugar'},{v:'low',l:'<5g'},{v:'mid',l:'5–15g'},{v:'high',l:'>15g'}];
+
+function sugarBucket(s) {
+  if (s===0) return 'zero';
+  if (s<5)   return 'low';
+  if (s<=15) return 'mid';
+  return 'high';
+}
+
+function buildFilterGroup(containerId, opts, groupKey) {
+  const f = FILTERS[groupKey];
+  document.getElementById(containerId).innerHTML = opts.map(o=>`
+    <button class="f-pill${f.has(o.v)?' on':''}" onclick="toggleFilter('${groupKey}','${o.v}')">${o.l}</button>`).join('');
+}
+function buildAllFilters() {
+  buildFilterGroup('fCat',CAT_OPTS,'cat');
+  buildFilterGroup('fEv',EV_OPTS,'ev');
+  buildFilterGroup('fUse',USE_OPTS,'use');
+  buildFilterGroup('fTonic',TONIC_OPTS,'tonic');
+  buildFilterGroup('fSugar',SUGAR_OPTS,'sugar');
+  updateFilterCount();
+}
+function toggleFilter(g,v) {
+  FILTERS[g].has(v) ? FILTERS[g].delete(v) : FILTERS[g].add(v);
+  buildAllFilters(); renderProducts();
+}
+function clearGroup(g) { FILTERS[g].clear(); buildAllFilters(); renderProducts(); }
+function clearAll() { Object.keys(FILTERS).forEach(k=>FILTERS[k].clear()); document.getElementById('searchInput').value=''; buildAllFilters(); renderProducts(); }
+function updateFilterCount() {
+  const n = Object.values(FILTERS).reduce((a,s)=>a+s.size,0);
+  document.getElementById('filterCount').textContent = n > 0 ? `${n} active` : '';
+}
+function toggleFilters() {
+  document.getElementById('filterSidebar').classList.toggle('open');
+}
+
+function mkBar(k,v,max,c) {
+  const pct=Math.min(100,Math.round((v/max)*100));
+  return `<div class="bar-row"><span class="bar-key">${k}</span><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${c}"></div></div><span class="bar-val">${v}mg</span></div>`;
+}
+
+function renderProducts() {
+  const q = (document.getElementById('searchInput').value||'').toLowerCase();
+  const sort = document.getElementById('sortSelect').value;
+
+  let list = PRODUCTS.filter(p => {
+    if (FILTERS.cat.size   && !FILTERS.cat.has(p.cat)) return false;
+    if (FILTERS.ev.size    && !FILTERS.ev.has(p.ev))   return false;
+    if (FILTERS.tonic.size && !FILTERS.tonic.has(p.tonic)) return false;
+    if (FILTERS.sugar.size && !FILTERS.sugar.has(sugarBucket(p.sugar))) return false;
+    if (FILTERS.use.size   && !p.use.some(u=>FILTERS.use.has(u))) return false;
+    if (q && !`${p.name} ${p.cat} ${p.best} ${p.badge} ${p.origin}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  if (sort==='na-desc') list.sort((a,b)=>b.na-a.na);
+  else if (sort==='na-asc') list.sort((a,b)=>a.na-b.na);
+  else if (sort==='mg-desc') list.sort((a,b)=>b.mg-a.mg);
+  else if (sort==='sugar-asc') list.sort((a,b)=>a.sugar-b.sugar);
+  else if (sort==='ev') list.sort((a,b)=>(EV_ORDER[a.ev]||9)-(EV_ORDER[b.ev]||9));
+
+  document.getElementById('resultsCount').innerHTML = `<strong>${list.length}</strong> of ${PRODUCTS.length} products`;
+
+  if (!list.length) {
+    document.getElementById('productsGrid').innerHTML = `<div class="empty-state"><div class="empty-state-icon">🔍</div><p>No products match your filters.<br><button onclick="clearAll()" style="color:var(--teal);background:none;border:none;cursor:pointer;font-weight:600;font-size:14px;margin-top:8px;">Clear all filters</button></p></div>`;
+    return;
+  }
+
+  document.getElementById('productsGrid').innerHTML = list.map(p=>`
+    <div class="prod-card">
+      <div class="prod-card-top">
+        <div>
+          <div class="prod-cat" style="color:${CAT_COLOR[p.cat]}">${p.cat}</div>
+          <div class="prod-name">${p.name}</div>
+          <div class="prod-origin">${p.origin}</div>
+        </div>
+        <span class="ev-badge ev-${p.ev}">${p.ev}</span>
+      </div>
+      <div class="bars">
+        ${mkBar('Na',p.na,2000,'#0D7377')}
+        ${mkBar('K', p.k, 800, '#059669')}
+        ${mkBar('Mg',p.mg,150, '#B45309')}
+      </div>
+      <div class="prod-meta">
+        <span class="prod-tag">${p.tonic}</span>
+        <span class="prod-tag">${p.sugar}g sugar</span>
+        <span class="tag" style="font-size:11px;padding:3px 9px">${p.badge}</span>
+        ${p.use.map(u=>`<span class="prod-tag">${u}</span>`).join('')}
+      </div>
+      <div class="prod-best"><strong style="color:var(--ink-2)">Best for:</strong> ${p.best}</div>
+      ${p.caveat ? `<div class="prod-caveat">${p.caveat}</div>` : ''}
+      <div style="font-size:11px;color:var(--ink-4);border-top:1px solid var(--border);padding-top:10px;">Source: ${p.ref}</div>
+    </div>`).join('');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initNav();
+  buildAllFilters();
+  renderProducts();
+});
+</script>
+</body>
+</html>

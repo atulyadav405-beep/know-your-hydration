@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Research Library — Know Your Hydration</title>
+<meta name="description" content="Every claim backed. 60+ peer-reviewed papers, meta-analyses, clinical guidelines and regulatory directives. Click any card to open the paper."/>
+<meta property="og:type"        content="website"/>
+<meta property="og:site_name"   content="Know Your Hydration"/>
+<meta property="og:title"       content="Research Library — Know Your Hydration"/>
+<meta property="og:description" content="Every claim backed. 60+ peer-reviewed papers, meta-analyses, clinical guidelines. Click any card to open the paper."/>
+<meta property="og:url"         content="https://hydration.wellversed.in/library.html"/>
+<meta property="og:image"       content="https://hydration.wellversed.in/og-home.png"/>
+<meta name="twitter:card"       content="summary_large_image"/>
+<meta name="twitter:title"      content="Research Library — Know Your Hydration"/>
+<meta name="twitter:description" content="Every claim backed. 60+ peer-reviewed papers, meta-analyses, clinical guidelines. Click any card to open the paper."/>
+<link rel="canonical"           href="https://hydration.wellversed.in/library.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/style.css"/>
+<style>
+.lib-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:36px}
+@media(min-width:640px){.lib-stats{grid-template-columns:repeat(4,1fr)}}
+.lib-stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;text-align:center;box-shadow:var(--sh-sm)}
+.lib-stat-num{font-family:'Lora',serif;font-size:2rem;font-weight:700;color:var(--teal);display:block;line-height:1;margin-bottom:4px}
+.lib-stat-lbl{font-size:12px;color:var(--ink-3);line-height:1.4}
+.src-card{display:block;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:20px;text-decoration:none;color:inherit;box-shadow:var(--sh-sm);transition:box-shadow .2s,transform .2s,border-color .2s}
+.src-card:hover{box-shadow:var(--sh-md);transform:translateY(-2px);border-color:var(--teal-mid)}
+.src-type{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:8px}
+.type-paper{background:var(--ev-high-bg);color:var(--ev-high)}
+.type-meta{background:var(--ev-mixed-bg);color:var(--ev-mixed)}
+.type-guideline{background:#DBEAFE;color:#1D4ED8}
+.type-regulatory{background:#FEF3C7;color:#B45309}
+.type-industry{background:#F3F4F6;color:#374151}
+.src-title{font-size:13px;font-weight:700;color:var(--ink);line-height:1.4;margin-bottom:6px}
+.src-meta{font-size:11px;color:var(--ink-4);font-style:italic;margin-bottom:6px}
+.src-journal{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-4)}
+.src-used{font-size:11px;color:var(--ink-4);border-top:1px solid var(--border);padding-top:10px;margin-top:12px;line-height:1.4}
+.src-used strong{color:var(--ink-3)}
+.src-arrow{font-size:12px;font-weight:700;color:var(--teal);margin-top:10px;opacity:0;transition:opacity .15s}
+.src-card:hover .src-arrow{opacity:1}
+.topic-pill{font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;border-radius:4px;background:var(--surface-2);color:var(--ink-3);border:1px solid var(--border);display:inline-block;margin:2px}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="nav-logo"><div class="nav-logo-dot"></div>Know Your Hydration</a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="symptoms.html">The Problems</a>
+      <a href="quiz.html">Find My Hydration</a>
+      <a href="library.html" class="active">Research Library</a>
+    </nav>
+    <div class="nav-right">
+      <a href="quiz.html" class="nav-cta">Find My Match →</a>
+      <button class="nav-burger" id="navBurger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="index.html">Home</a>
+  <a href="symptoms.html">The Problems</a>
+  <a href="quiz.html">Find My Hydration</a>
+  <a href="library.html" class="active">Research Library</a>
+  <a href="https://www.wellversed.in/products/osmo" target="_blank" class="nav-mobile-cta">Try Osmo →</a>
+</div>
+
+<div class="page-hero">
+  <div class="wrap">
+    <span class="label">Every claim. Every source.</span>
+    <h1 class="heading" style="margin-bottom:10px;">Research Library</h1>
+    <p class="subheading" style="max-width:560px;">Nothing on this site is asserted without evidence. Every claim links to a primary source — peer-reviewed papers, meta-analyses, clinical guidelines, and regulatory directives. Click any card to open the paper.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="wrap">
+    <div class="lib-stats">
+      <div class="lib-stat"><span class="lib-stat-num" id="sc0">—</span><div class="lib-stat-lbl">Peer-reviewed papers</div></div>
+      <div class="lib-stat"><span class="lib-stat-num" id="sc1">—</span><div class="lib-stat-lbl">Meta-analyses</div></div>
+      <div class="lib-stat"><span class="lib-stat-num" id="sc2">—</span><div class="lib-stat-lbl">Clinical guidelines</div></div>
+      <div class="lib-stat"><span class="lib-stat-num" id="sc3">—</span><div class="lib-stat-lbl">Regulatory directives</div></div>
+    </div>
+
+    <div class="search-wrap" style="margin-bottom:14px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input class="search-input" type="text" id="libSearch" placeholder="Search by title, author, journal, topic, or year…" oninput="renderLib()"/>
+    </div>
+
+    <div class="filter-bar" style="margin-bottom:20px">
+      <div class="filter-bar-inner" id="libFilters"></div>
+    </div>
+
+    <div class="results-count" id="libCount"></div>
+    <div class="grid-3" id="libGrid"></div>
+
+    <div class="view-all-bar" style="margin-top:24px">
+      <div class="view-all-text">This library covers sources directly cited in our database. For the complete annotated inventory, visit the full Clinical Dashboard.</div>
+      <a href="https://atulyadav405-beep.github.io/hydration-reference/#sources" target="_blank" class="btn btn-outline btn-sm">Full annotated list ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><div class="footer-brand-dot"></div>Know Your Hydration</div>
+        <div class="footer-desc">Evidence-based electrolyte education. Peer-reviewed sources only. Not medical advice.</div>
+      </div>
+      <div>
+        <div class="footer-col-head">On this site</div>
+        <a href="index.html">Home</a>
+        <a href="symptoms.html">The Problems</a>
+        <a href="quiz.html">Find My Hydration</a>
+        <a href="library.html">Research Library</a>
+      </div>
+      <div>
+        <div class="footer-col-head">Full Database</div>
+        <a href="https://atulyadav405-beep.github.io/hydration-reference/" target="_blank">Clinical Dashboard ↗</a>
+        <a href="https://atulyadav405-beep.github.io/hydration-reference/#sources" target="_blank">60+ Sources ↗</a>
+      </div>
+      <div>
+        <div class="footer-col-head">Try Osmo</div>
+        <a href="https://www.wellversed.in/products/osmo" target="_blank">Shop Osmo ↗</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Know Your Hydration · Evidence-based · May 2026</p>
+      <p>For informational purposes only. Not medical advice.</p>
+    </div>
+  </div>
+</footer>
+</div>
+<script src="js/data.js"></script>
+<script>
+const TYPE_OPTS=[{v:'all',l:'All types'},{v:'paper',l:'Research papers'},{v:'meta',l:'Meta-analyses'},{v:'guideline',l:'Guidelines'},{v:'regulatory',l:'Regulatory'}];
+let activeType='all';
+function buildFilters(){document.getElementById('libFilters').innerHTML=TYPE_OPTS.map(o=>`<button class="filter-pill${activeType===o.v?' active':''}" onclick="setType('${o.v}')">${o.l}</button>`).join('');}
+function setType(v){activeType=v;buildFilters();renderLib();}
+function renderLib(){
+  const q=(document.getElementById('libSearch').value||'').toLowerCase();
+  let list=SOURCES.filter(s=>{
+    if(activeType!=='all'&&s.type!==activeType)return false;
+    if(q&&!`${s.title} ${s.authors} ${s.journal} ${s.year} ${(s.topics||[]).join(' ')}`.toLowerCase().includes(q))return false;
+    return true;
+  }).sort((a,b)=>b.year-a.year);
+  document.getElementById('libCount').innerHTML=`<strong>${list.length}</strong> of ${SOURCES.length} sources`;
+  if(!list.length){document.getElementById('libGrid').innerHTML=`<div class="empty-state"><div style="font-size:36px;margin-bottom:12px">📚</div><p>No sources match.<br><button onclick="document.getElementById('libSearch').value='';setType('all')" style="color:var(--teal);background:none;border:none;cursor:pointer;font-weight:600;font-size:14px;margin-top:8px">Clear search</button></p></div>`;return;}
+  document.getElementById('libGrid').innerHTML=list.map(s=>`
+    <a class="src-card" href="${s.url}" target="_blank" rel="noopener">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:4px">
+        <span class="src-type type-${s.type}">${s.type}</span>
+        <span class="mono" style="color:var(--ink-4)">${s.year}</span>
+      </div>
+      <div class="src-title">${s.title}</div>
+      <div class="src-meta">${s.authors}</div>
+      <div class="src-journal">${s.journal}</div>
+      ${s.topics&&s.topics.length?`<div style="margin-top:8px">${s.topics.map(t=>`<span class="topic-pill">${t}</span>`).join('')}</div>`:''}
+      <div class="src-used"><strong>Used for:</strong> ${s.used}</div>
+      <div class="src-arrow">Open source ↗</div>
+    </a>`).join('');
+}
+function initStats(){
+  const counts={paper:0,meta:0,guideline:0,regulatory:0};
+  SOURCES.forEach(s=>{if(counts[s.type]!==undefined)counts[s.type]++;});
+  document.getElementById('sc0').textContent=counts.paper;
+  document.getElementById('sc1').textContent=counts.meta;
+  document.getElementById('sc2').textContent=counts.guideline;
+  document.getElementById('sc3').textContent=counts.regulatory;
+}
+document.addEventListener('DOMContentLoaded',()=>{initNav();buildFilters();renderLib();initStats();});
+</script>
+<script src="js/chat.js"></script>
+<script>document.addEventListener("DOMContentLoaded", initChat);</script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Find My Hydration — Know Your Hydration</title>
+<meta name="description" content="Answer 6 questions. Get a personalised hydration protocol built for your sport, intensity, and Indian climate."/>
+<meta property="og:type"        content="website"/>
+<meta property="og:site_name"   content="Know Your Hydration"/>
+<meta property="og:title"       content="Find My Hydration — Know Your Hydration"/>
+<meta property="og:description" content="Answer 6 questions. Get a personalised hydration protocol built for your sport, intensity, and Indian climate."/>
+<meta property="og:url"         content="https://hydration.wellversed.in/quiz.html"/>
+<meta property="og:image"       content="https://hydration.wellversed.in/og-home.png"/>
+<meta name="twitter:card"       content="summary_large_image"/>
+<meta name="twitter:title"      content="Find My Hydration — Know Your Hydration"/>
+<meta name="twitter:description" content="Answer 6 questions. Get a personalised hydration protocol built for your sport, intensity, and Indian climate."/>
+<link rel="canonical"           href="https://hydration.wellversed.in/quiz.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/style.css"/>
+<style>
+.quiz-wrap{max-width:680px;margin:0 auto}
+.progress-bar{height:4px;background:var(--border);border-radius:2px;margin-bottom:36px;overflow:hidden}
+.progress-fill{height:100%;background:var(--teal);border-radius:2px;transition:width .4s ease}
+.step{display:none}
+.step.active{display:block}
+.step-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:10px}
+.step-q{font-family:'Lora',serif;font-size:clamp(1.2rem,3vw,1.6rem);font-weight:700;color:var(--ink);line-height:1.25;margin-bottom:6px}
+.step-sub{font-size:14px;color:var(--ink-3);margin-bottom:24px;line-height:1.6}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt-btn{display:flex;align-items:center;gap:14px;padding:16px 18px;background:var(--surface);border:2px solid var(--border);border-radius:var(--r-lg);cursor:pointer;text-align:left;transition:all .15s;width:100%}
+.opt-btn:hover{border-color:var(--teal-mid);background:var(--teal-light)}
+.opt-btn.selected{border-color:var(--teal);background:var(--teal-light)}
+.opt-icon{font-size:22px;flex-shrink:0;width:32px;text-align:center}
+.opt-text{flex:1}
+.opt-label{font-size:14px;font-weight:600;color:var(--ink);display:block}
+.opt-sub{font-size:12px;color:var(--ink-3);margin-top:2px;display:block}
+.opt-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--border-2);flex-shrink:0;transition:all .15s;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px}
+.opt-btn.selected .opt-check{background:var(--teal);border-color:var(--teal)}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:28px;gap:12px}
+.quiz-back{font-size:13px;font-weight:600;color:var(--ink-3);background:none;border:none;cursor:pointer;padding:8px 0}
+.quiz-back:hover{color:var(--ink)}
+.quiz-next{background:var(--teal);color:#fff;font-size:14px;font-weight:700;padding:12px 28px;border-radius:var(--r-md);border:none;cursor:pointer;transition:all .15s}
+.quiz-next:hover{background:var(--teal-2);transform:translateY(-1px)}
+.quiz-next:disabled{background:var(--border-2);color:var(--ink-4);cursor:not-allowed;transform:none}
+
+/* Result */
+.result-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-2xl);padding:32px 28px;box-shadow:var(--sh-md)}
+@media(min-width:768px){.result-box{padding:44px 48px}}
+.result-score-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+.result-score{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;text-align:center}
+.result-score-num{font-family:'Lora',serif;font-size:1.8rem;font-weight:700;color:var(--teal);line-height:1;display:block;margin-bottom:4px}
+.result-score-lbl{font-size:11px;color:var(--ink-4);line-height:1.4}
+.result-section{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.result-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.result-section-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:10px}
+.result-text{font-size:14px;color:var(--ink-2);line-height:1.7}
+.result-text strong{color:var(--ink)}
+.osmo-cta-box{background:linear-gradient(135deg,#0D7377,#0B4F52);border-radius:var(--r-xl);padding:24px 28px;margin-top:28px;display:flex;flex-direction:column;gap:14px}
+@media(min-width:640px){.osmo-cta-box{flex-direction:row;align-items:center;justify-content:space-between}}
+.osmo-cta-text{font-size:15px;font-weight:700;color:#fff;line-height:1.4}
+.osmo-cta-sub{font-size:13px;color:rgba(255,255,255,.65);margin-top:4px}
+.btn-osmo-sm{background:#fff;color:var(--teal-2);font-size:14px;font-weight:700;padding:12px 24px;border-radius:var(--r-md);border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0;transition:all .15s}
+.btn-osmo-sm:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.15)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="nav-logo"><div class="nav-logo-dot"></div>Know Your Hydration</a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="symptoms.html">The Problems</a>
+      <a href="quiz.html" class="active">Find My Hydration</a>
+      <a href="library.html">Research Library</a>
+    </nav>
+    <div class="nav-right">
+      <button class="nav-burger" id="navBurger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="index.html">Home</a>
+  <a href="symptoms.html">The Problems</a>
+  <a href="quiz.html" class="active">Find My Hydration</a>
+  <a href="library.html">Research Library</a>
+  <a href="https://www.wellversed.in/products/osmo" target="_blank" class="nav-mobile-cta">Try Osmo →</a>
+</div>
+
+<div class="page-hero">
+  <div class="wrap">
+    <span class="label">Personalised · Evidence-based</span>
+    <h1 class="heading" style="margin-bottom:10px;">Find your hydration protocol</h1>
+    <p class="subheading" style="max-width:520px;">6 questions. Your sport, your intensity, your climate. We'll map your specific needs to the science and tell you exactly what your body requires.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="wrap">
+    <div class="quiz-wrap">
+
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+
+      <!-- Step 1: Sport -->
+      <div class="step active" id="step1">
+        <div class="step-label">Question 1 of 6</div>
+        <div class="step-q">What's your primary activity?</div>
+        <div class="step-sub">This affects sweat rate, session duration, and sodium needs.</div>
+        <div class="opts">
+          <button class="opt-btn" data-val="running" onclick="select(this)"><span class="opt-icon">🏃</span><span class="opt-text"><span class="opt-label">Running / Endurance</span><span class="opt-sub">Road running, trail, marathon, cycling, triathlon</span></span><span class="opt-check">✓</span></button>
+          <button class="opt-btn" data-val="gym" onclick="select(this)"><span class="opt-icon">🏋️</span><span class="opt-text"><span class="opt-label">Gym & Fitness</span><span class="opt-sub">Weightlifting, HIIT, CrossFit, functional training</span></span><span class="opt-check">✓</span></button>
+          <button class="opt-btn" data-val="combat" onclick="select(this)"><span class="opt-icon">🥊</span><span class="opt-text"><span class="opt-label">Combat Sports</span><span class="opt-sub">Boxing, MMA, wrestling, BJJ, karate</span></span><span class="opt-check">✓</span></button>
+          <button class="opt-btn" data-val="outdoor" onclick="select(this)"><span class="opt-icon">☀️</span><span class="opt-text"><span class="opt-label">Outdoor / Field sports</span><span class="opt-sub">Cricket, football, outdoor training, construction work</span></span><span class="opt-check">✓</span></button>
+        </div>
+        <div class="quiz-nav"><div></div><button class="quiz-next" id="next1" onclick="goNext(2)" disabled>Next →</button></div>
+      </div>
+
+      <!-- Step 2: Intensity -->
+      <div class="step" id="step2">
+        <div class="step-label">Question 2 of 6</div>
+        <div class="step-q">How intense are your typical sessions?</div>
+        <div class="step-sub">Higher intensity = greater sweat rate = more electrolytes needed.</div>
+        <div class="opts">
+          <button class="opt-btn" data-val="light" onclick="select(this)"><span class="opt-icon">🚶</span><span class="opt-text"><span class="opt-label">Light</span><span class="opt-sub">Easy pace, conversational, minimal sweating</span></span><span class="opt-check">✓</span></button>
+          <button class="opt-btn" data-val="moderate" onclick="select(this)"><span class="opt-icon">🚴</span><span class="opt-text"><span class="opt-label">Moderate</span><span class="opt-sub">Comfortable but working, some sweating</span></span><span class="opt-check">✓</span></button>
+          <button class="opt-btn" data-val="hard" onclick="select(this)"><span class="opt-icon">🏃</span><span class="opt-text"><span class="opt-label">Hard</span><span class="opt-sub">Pushing limits, heavy sweating, high heart rate</span></span><span class="opt-check">✓</span></button>
+          <button class="opt-btn" data-val="max" onclick="select(this)"><span class="opt-icon">💥</span><span class="opt-text"><span class="opt-label">Maximum</span><span class="opt-sub">Competition, intervals, extreme exertion</span></span><span class="opt-check">✓</span></button>
+        </div>
+        <div class="quiz-nav"><button class="quiz-back" onclick="goBack(1)">← Back</button><button class="quiz-next" id="next2" onclick="goNext(3)" disabled>Next →</button></div>
+      </div>
+
+      <!-- Step 3: Duration -->
+      <div class="step" id="step3">
+        <div class="step-label">Question 3 of 6</div>
+        <div class="step-q">How long are your typical sessions?</div>
+        <div class="step-sub">The 60-minute mark is the critical threshold — beyond it, electrolyte replacement becomes essential.</div>
+        <div class="opts">
+          <button class="opt-btn" data-val="short" onclick="select(this)"><span class="opt-icon">⚡</span><span class="opt-text"><span class="opt-label">Under 45 minutes</span><span class="opt-sub">Short, sharp sessions</span></span><span class="opt-check">✓</span></button>
+          <button class="opt-btn" data-val="medium" onclick="select(this)"><span class="opt-icon">🕐</span><span class="opt-text"><span class="opt-label">45 minutes – 90 minutes</span><span class="opt-sub">Most gym, class, and match sessions</span></span><span class="opt-check">✓</span></button>
+          <button class="opt-btn" data-val="long" onclick="select(this)"><span class="opt-icon">🕑</span><span class="opt-text"><span class="opt-label">90 minutes – 3 hours</span><span class="opt-sub">Long runs, extended matches, endurance events</span></span><span class="opt-check">✓</span></button>
+          <button class="opt-btn" data-val="ultra" onclick="select(this)"><span class="opt-icon">🌅</span><span class="opt-text"><span class="opt-label">3+ hours</span><span class="opt-sub">Ultra events, all-day outdoor work, marathon+</span></span><span class="opt-check">✓</span></button>
+        </div>
+        <div class="quiz-nav"><button class="quiz-back" onclick="goBack(2)">← Back</button><button class="quiz-next" id="next3" onclick="goNext(4)" disabled>Next →</button></div>
+      </div>
+
+      <!-- Step 4: Sweat -->
+      <div class="step" id="step4">
+        <div class="step-label">Question 4 of 6</div>
+        <div class="step-q">How much do you sweat?</div>
+        <div class="step-sub">Sweat sodium varies 4× between individuals. This is the biggest personal variable in electrolyte needs.</div>
+        <div class="opts">
+          <button class="opt-btn" data-val="low" onclick="select(this)"><span class="opt-icon">💧</span><span class="opt-text"><span class="opt-label">Light sweater</span><span class="opt-sub">Minimal sweat, clothes stay mostly dry</span></span><span class="opt-check">✓</span></button>
+          <button class="opt-btn" data-val="medium" onclick="select(this)"><span class="opt-icon">💦</span><span class="opt-text"><span class="opt-label">Average sweater</span><span class="opt-sub">Noticeable sweat, shirt gets damp</span></span><span class="opt-check">✓</span></button>
+          <button class="opt-btn" data-val="heavy" onclick="select(this)"><span class="opt-icon">🌊</span><span class="opt-text"><span class="opt-label">Heavy sweater</span><span class="opt-sub">Soaked shirt, dripping, white salt marks on skin</span></span><span class="opt-check">✓</span></button>
+        </div>
+        <div class="quiz-nav"><button class="quiz-back" onclick="goBack(3)">← Back</button><button class="quiz-next" id="next4" onclick="goNext(5)" disabled>Next →</button></div>
+      </div>
+
+      <!-- Step 5: Climate -->
+      <div class="step" id="step5">
+        <div class="step-label">Question 5 of 6</div>
+        <div class="step-q">Where do you train?</div>
+        <div class="step-sub">Indian summer heat can double your electrolyte needs. WBGT above 28°C is a different game entirely.</div>
+        <div class="opts">
+          <button class="opt-btn" data-val="ac" onclick="select(this)"><span class="opt-icon">❄️</span><span class="opt-text"><span class="opt-label">Air-conditioned gym</span><span class="opt-sub">Controlled environment, cool temperature</span></span><span class="opt-check">✓</span></button>
+          <button class="opt-btn" data-val="mild" onclick="select(this)"><span class="opt-icon">🌤️</span><span class="opt-text"><span class="opt-label">Mild outdoor / non-AC gym</span><span class="opt-sub">Warm but manageable, not extreme heat</span></span><span class="opt-check">✓</span></button>
+          <button class="opt-btn" data-val="india-hot" onclick="select(this)"><span class="opt-icon">🌡️</span><span class="opt-text"><span class="opt-label">Indian summer heat (30°C+)</span><span class="opt-sub">Outdoor training in peak summer — high heat, high humidity</span></span><span class="opt-check">✓</span></button>
+        </div>
+        <div class="quiz-nav"><button class="quiz-back" onclick="goBack(4)">← Back</button><button class="quiz-next" id="next5" onclick="goNext(6)" disabled>Next →</button></div>
+      </div>
+
+      <!-- Step 6: Constraint -->
+      <div class="step" id="step6">
+        <div class="step-label">Question 6 of 6</div>
+        <div class="step-q">Any health considerations?</div>
+        <div class="step-sub">This helps us flag any cautions in your protocol.</div>
+        <div class="opts">
+          <button class="opt-btn" data-val="none" onclick="select(this)"><span class="opt-icon">✅</span><span class="opt-text"><span class="opt-label">None — I'm healthy</span><span class="opt-sub">No specific health conditions</span></span><span class="opt-check">✓</span></button>
+          <button class="opt-btn" data-val="diabetes" onclick="select(this)"><span class="opt-icon">⚠️</span><span class="opt-text"><span class="opt-label">Diabetes / blood sugar sensitivity</span><span class="opt-sub">Need zero or very low sugar options</span></span><span class="opt-check">✓</span></button>
+          <button class="opt-btn" data-val="hypertension" onclick="select(this)"><span class="opt-icon">⚠️</span><span class="opt-text"><span class="opt-label">High blood pressure</span><span class="opt-sub">Need to watch sodium intake</span></span><span class="opt-check">✓</span></button>
+          <button class="opt-btn" data-val="kidney" onclick="select(this)"><span class="opt-icon">⚠️</span><span class="opt-text"><span class="opt-label">Kidney condition (CKD)</span><span class="opt-sub">Need to limit potassium</span></span><span class="opt-check">✓</span></button>
+        </div>
+        <div class="quiz-nav"><button class="quiz-back" onclick="goBack(5)">← Back</button><button class="quiz-next" id="next6" onclick="showResult()" disabled>See my protocol →</button></div>
+      </div>
+
+      <!-- Result -->
+      <div class="step" id="stepResult">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:12px">Your personalised protocol</div>
+        <div class="result-box">
+          <h2 class="heading-sm" id="resultTitle" style="margin-bottom:6px">Your Hydration Profile</h2>
+          <div style="font-size:14px;color:var(--ink-3);margin-bottom:20px" id="resultSport"></div>
+
+          <div class="result-score-row" id="resultScores"></div>
+
+          <div id="resultSections"></div>
+
+          <div class="osmo-cta-box" id="osmoCTA">
+            <div>
+              <div class="osmo-cta-text">Osmo is built for this profile.</div>
+              <div class="osmo-cta-sub">Full electrolyte stack. Zero sugar. Taurine for heat. Mg for recovery.</div>
+            </div>
+            <a href="https://www.wellversed.in/products/osmo" target="_blank" rel="noopener" class="btn-osmo-sm">Try Osmo →</a>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap">
+          <button class="btn btn-outline" onclick="resetQuiz()">← Retake quiz</button>
+          <a href="library.html" class="btn btn-outline">Read the research →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><div class="footer-brand-dot"></div>Know Your Hydration</div>
+        <div class="footer-desc">Evidence-based electrolyte education. Peer-reviewed sources only.</div>
+      </div>
+      <div>
+        <div class="footer-col-head">On this site</div>
+        <a href="index.html">Home</a>
+        <a href="symptoms.html">The Problems</a>
+        <a href="quiz.html">Find My Hydration</a>
+        <a href="library.html">Research Library</a>
+      </div>
+      <div>
+        <div class="footer-col-head">Full Database</div>
+        <a href="https://atulyadav405-beep.github.io/hydration-reference/" target="_blank">Clinical Dashboard ↗</a>
+      </div>
+      <div>
+        <div class="footer-col-head">Try Osmo</div>
+        <a href="https://www.wellversed.in/products/osmo" target="_blank">Shop Osmo ↗</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Know Your Hydration · May 2026</p>
+      <p>For informational purposes only. Not medical advice.</p>
+    </div>
+  </div>
+</footer>
+<script src="js/data.js"></script>
+<script>
+const answers = {sport:null,intensity:null,duration:null,sweat:null,climate:null,constraint:null};
+const keys = ['sport','intensity','duration','sweat','climate','constraint'];
+let currentStep = 1;
+
+function select(btn) {
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  const stepIdx = currentStep - 1;
+  answers[keys[stepIdx]] = btn.dataset.val;
+  document.getElementById('next'+currentStep).disabled = false;
+}
+
+function goNext(n) {
+  document.getElementById('step'+currentStep).classList.remove('active');
+  currentStep = n;
+  document.getElementById('step'+currentStep).classList.add('active');
+  updateProgress();
+}
+function goBack(n) {
+  document.getElementById('step'+currentStep).classList.remove('active');
+  currentStep = n;
+  document.getElementById('step'+currentStep).classList.add('active');
+  updateProgress();
+}
+function updateProgress() {
+  const pct = ((currentStep - 1) / 6) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function showResult() {
+  document.getElementById('step'+currentStep).classList.remove('active');
+  document.getElementById('stepResult').classList.add('active');
+  document.getElementById('progressFill').style.width = '100%';
+  buildResult();
+}
+
+function buildResult() {
+  const {sport, intensity, duration, sweat, climate, constraint} = answers;
+
+  // Calculate Na recommendation mg/hr
+  const naBase = {light:200, moderate:400, hard:600, max:800}[intensity] || 400;
+  const naSweat = {low:0.8, medium:1.0, heavy:1.3}[sweat] || 1.0;
+  const naClimate = {ac:0.9, mild:1.0, 'india-hot':1.4}[climate] || 1.0;
+  const naTarget = Math.round(naBase * naSweat * naClimate / 50) * 50;
+
+  const sportLabels = {running:'Running & Endurance', gym:'Gym & Fitness', combat:'Combat Sports', outdoor:'Outdoor / Field Sports'};
+  const durationLabels = {short:'<45 min', medium:'45–90 min', long:'90 min – 3 hrs', ultra:'3+ hrs'};
+
+  document.getElementById('resultTitle').textContent = `${sportLabels[sport] || 'Athlete'} Protocol`;
+  document.getElementById('resultSport').textContent = `${durationLabels[duration]} · ${intensity} intensity · ${sweat} sweater · ${climate === 'india-hot' ? 'Indian summer heat' : climate === 'ac' ? 'AC environment' : 'mild outdoor'}`;
+
+  // Key numbers
+  document.getElementById('resultScores').innerHTML = `
+    <div class="result-score"><span class="result-score-num">${naTarget}mg</span><div class="result-score-lbl">sodium target per hour of activity</div></div>
+    <div class="result-score"><span class="result-score-num">${duration === 'short' ? '0' : duration === 'medium' ? '400' : duration === 'long' ? '800' : '1200'}mg</span><div class="result-score-lbl">sodium pre-loading 60–90 min before</div></div>
+    <div class="result-score"><span class="result-score-num">${climate === 'india-hot' ? '600ml' : duration === 'ultra' ? '500ml' : '400ml'}</span><div class="result-score-lbl">fluid per 30 min (with electrolytes)</div></div>
+  `;
+
+  // Sections
+  let sections = '';
+
+  // During session
+  sections += `<div class="result-section">
+    <div class="result-section-title">During your session</div>
+    <div class="result-text">
+      ${naTarget >= 800 ? `<strong>High sodium priority:</strong> At your sweat rate and intensity, target ${naTarget}mg Na per hour. Start electrolytes within the first 20 minutes — don't wait for thirst.` : naTarget >= 500 ? `<strong>Moderate sodium replacement:</strong> ${naTarget}mg Na per hour. Drink every 20–25 minutes with electrolytes. Plain water alone will dilute plasma sodium.` : `<strong>Light electrolyte support:</strong> ${naTarget}mg Na per hour is sufficient for your activity level. Short sessions under 45 minutes can use plain water + a post-session electrolyte.`}
+      ${duration === 'long' || duration === 'ultra' ? ' For sessions over 90 minutes, potassium replacement becomes important alongside sodium.' : ''}
+      ${climate === 'india-hot' ? ' <strong>Indian heat protocol:</strong> Increase intake by 30–40% vs temperate conditions. Your sweat rate can exceed 1.5L/hr. Consider pre-cooling and shade breaks.' : ''}
+    </div>
+  </div>`;
+
+  // Recovery
+  sections += `<div class="result-section">
+    <div class="result-section-title">Post-session recovery</div>
+    <div class="result-text">
+      ${sport === 'combat' ? '<strong>Combat sports priority:</strong> Rapid rehydration matters for weight class athletes. Replace 150% of fluid lost within 4–6 hours post-session. Include Na + K + Mg.' : ''}
+      Prioritise <strong>magnesium</strong> post-session — it powers the Na/K-ATPase pump that repairs muscle fibres. Most athletes neglect Mg and wonder why recovery is slow.
+      ${intensity === 'hard' || intensity === 'max' ? ' At your intensity, consider 400–800mg Mg glycinate or malate before bed for muscle recovery and sleep quality.' : ' A Mg-containing electrolyte post-session is sufficient for your intensity level.'}
+    </div>
+  </div>`;
+
+  // Key ingredient
+  sections += `<div class="result-section">
+    <div class="result-section-title">Key ingredients to prioritise</div>
+    <div class="result-text">
+      <strong>Must have:</strong> Sodium (${naTarget}mg/hr) + Potassium + Magnesium (obligate pump cofactor).<br/>
+      ${climate === 'india-hot' ? '<strong>Heat priority:</strong> Taurine — organic osmolyte that stabilises cells under heat stress, shown to increase sweat efficiency by 8–15% (Peel 2024).' : ''}
+      ${duration === 'long' || duration === 'ultra' ? '<strong>Endurance priority:</strong> Boron — reduces renal mineral excretion, helping retain Mg and Ca over long sessions.' : ''}
+      ${constraint === 'diabetes' ? '<strong>Important:</strong> Choose zero-sugar electrolytes only. Avoid glucose-containing products.' : ''}
+      ${constraint === 'hypertension' ? '<strong>Caution:</strong> With hypertension, avoid very high sodium products (>800mg per dose). Stay closer to 300–500mg Na per serving.' : ''}
+      ${constraint === 'kidney' ? '<strong>Caution:</strong> With CKD, avoid high-potassium drinks like coconut water. Consult your nephrologist before electrolyte supplementation.' : ''}
+    </div>
+  </div>`;
+
+  // What to avoid
+  sections += `<div class="result-section">
+    <div class="result-section-title">What to avoid</div>
+    <div class="result-text">
+      ${constraint === 'diabetes' ? '⚠️ Avoid glucose-containing sports drinks (Gatorade, Pocari Sweat, Liquid I.V.). ' : ''}
+      <strong>Plain water as your only fluid</strong> for sessions above 60 minutes — it dilutes plasma sodium and triggers kidney excretion. You'll urinate most of it out within 90 minutes (Vrijens & Rehrer 1999).
+      ${intensity === 'max' || intensity === 'hard' ? ' <strong>Hypertonic drinks</strong> (very sugary sports drinks) — they slow gastric emptying during hard exercise, causing nausea.' : ''}
+    </div>
+  </div>`;
+
+  document.getElementById('resultSections').innerHTML = sections;
+
+  // Show Osmo CTA unless kidney constraint
+  document.getElementById('osmoCTA').style.display = constraint === 'kidney' ? 'none' : 'flex';
+}
+
+function resetQuiz() {
+  Object.keys(answers).forEach(k => answers[k] = null);
+  currentStep = 1;
+  document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.quiz-next').forEach(b => b.disabled = true);
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step1').classList.add('active');
+  document.getElementById('progressFill').style.width = '0%';
+}
+
+document.addEventListener('DOMContentLoaded', initNav);
+</script>
+<script src="js/chat.js"></script>
+<script>document.addEventListener("DOMContentLoaded", initChat);</script>
+</body>
+</html>
